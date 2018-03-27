@@ -23,7 +23,9 @@ public class UserService {
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
 
-
+    public ArrayList<User> getUserByAge(int age){
+        return userMapper.getUserByAge(age);
+    }
     //get all users using mybatis
     public ArrayList<User> getAllUsers (){
         return userMapper.getAllUsers();

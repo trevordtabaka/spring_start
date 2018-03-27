@@ -18,7 +18,10 @@ public class UserController {
 
 
     //RequestMapping maps URLs to methods
-
+    @RequestMapping("/age")
+    public ArrayList<User> getUsers(@RequestParam(value="age") int age) {
+        return userService.getUserByAge(age);
+    }
     //Get
     @RequestMapping("/")
     public ArrayList<User> getUsers() {
