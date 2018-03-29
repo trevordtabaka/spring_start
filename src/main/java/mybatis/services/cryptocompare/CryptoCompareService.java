@@ -1,9 +1,10 @@
-package mybatis.services;
+package mybatis.services.cryptocompare;
 
 import mybatis.mappers.cryptocompare.CryptoCompareMapper;
 import mybatis.model.cryptocompare.CryptoCompareRoot;
 import mybatis.model.cryptocompare.CryptoCompareSingle;
 import mybatis.model.cryptocompare.TestCryptoResponse;
+import mybatis.model.cryptocompare.histohour.HistoHourRoot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -54,5 +55,14 @@ public class CryptoCompareService {
     public CryptoCompareSingle insertSingle(CryptoCompareSingle compareSingle){
             cryptoCompareMapper.insertSingle(compareSingle);
         return cryptoCompareMapper.getSingle(compareSingle.getfSym());
+    }
+
+    public HistoHourRoot getHistoHour(String fsym,String tsym,String e,String extraParams,boolean sign,int limit,boolean persist){
+
+        // Query
+        String fQuery = "https://min-api.cryptocompare.com/data/histohour?fsym="+fsym+"&tsym="+tsym+"&e="+e+"&extraParams="+extraParams+"&sign="+sign+"&limit="+limit+"&persist="+persist;
+        HistoHourRoot response = restTemplate.getForObject(
+                fQuery, HistoHourRoot.class);
+        return response;
     }
 }
