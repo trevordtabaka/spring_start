@@ -22,11 +22,19 @@ public class SunriseSunsetService {
     @Autowired
     SunriseSunsetMapper sunrisesunsetMapper;
 
+    /**
+     *
+     * @param lat - the latitude of the location you want to query for
+     * @param lng - the longitude of the location you want to query for
+     * @param persist - if true this allows us to keep the data for the use of making our own data base, etc
+     * @return returns a SunriseSunsetRoot object which has the Results object with the data
+     */
     public SunriseSunsetRoot searchSunriseSunset(double lat, double lng, boolean persist) {
-
+// Query the sunrise sunset api and store the respone in a SunriseSunsetRoot object
         String fQuery = "https://api.sunrise-sunset.org/json?lat="+lat+"&lng="+lng;
                 SunriseSunsetRoot response = restTemplate.getForObject(
                 fQuery, SunriseSunsetRoot.class);
+
 // make overview object and set values for pojo. Used to make database
         SunriseSunsetOverview sunriseSunsetOverview = new SunriseSunsetOverview();
         sunriseSunsetOverview.setLatitude(lat);
@@ -34,6 +42,8 @@ public class SunriseSunsetService {
         sunriseSunsetOverview.setDay_length(response.getResults().getDay_length());
 
         System.out.println("********* Got results **********");
+        // if you want to persist the data and use data to insert results to a DB then call the
+        // insertSummary method and pass in the sunriseSunsetOverview object that contains the data you set it to have above
         if(persist){
             insertSummary(sunriseSunsetOverview);
         }
@@ -81,10 +91,48 @@ public class SunriseSunsetService {
         return obj;
 
     }
+
+    //get user by id
+    public SunriseSunsetOverview getById(int id){
+        return sunrisesunsetMapper.getByID(id);
+    }
+
     public void insertSummary(SunriseSunsetOverview result){
 
         sunrisesunsetMapper.insertSummary(result);
 
 
     }
+
+    //add new user
+    public SunriseSunsetOverview addNew(SunriseSunsetOverview sunriseSunsetOverview) {
+        sunrisesunsetMapper.insertSummary(sunriseSunsetOverview);
+        return sunrisesunsetMapper.getByLatLong(sunriseSunsetOverview.getLatitude(),sunriseSunsetOverview.getLongitude());
+    }
+
+    public SunriseSunsetOverview getByLatLong(double latitude, double longitude) {
+        return sunrisesunsetMapper.getByLatLong(latitude,longitude);
+    }
+
+    public SunriseSunsetOverview deleteById(int id) {
+        sunrisesunsetMapper.deleteLocation(id);
+        return sunrisesunsetMapper.getByID(id);
+    }
+
+    public SunriseSunsetOverview updateById(SunriseSunsetOverview sunriseSunsetOverview) {
+        sunrisesunsetMapper.updateLocation(sunriseSunsetOverview);
+        return sunrisesunsetMapper.getByLatLong(sunriseSunsetOverview.getLatitude(), sunriseSunsetOverview.getLongitude());
+    }
+
+//    //update user by its id
+//    public User updateById(User user) {
+//        userMapper.updateUser(user);
+//        return userMapper.getByName(user.getFirst_name());
+//    }
+//
+//    //delete
+//    public User deleteById(int id) {
+//        userMapper.deleteUser(id);
+//        return userMapper.getByID(id);
+//    }
 }

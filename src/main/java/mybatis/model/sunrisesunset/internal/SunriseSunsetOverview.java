@@ -2,6 +2,16 @@ package mybatis.model.sunrisesunset.internal;
 
 public class SunriseSunsetOverview {
 
+    int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     double latitude;
     double longitude;
     String day_length;

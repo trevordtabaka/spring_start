@@ -1,11 +1,10 @@
 package mybatis.controllers;
 import mybatis.model.sunrisesunset.external.SunriseSunsetRoot;
 import mybatis.model.sunrisesunset.internal.DayLengthComparison;
+import mybatis.model.sunrisesunset.internal.SunriseSunsetOverview;
 import mybatis.services.SunriseSunsetService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("sunrisesunset")
@@ -30,5 +29,29 @@ public class SunriseSunsetController {
 
         return  sunriseSunsetService.compareDayLength(lat1, lng1,lat2,lng2);
     }
+    @RequestMapping("/{id}")
+    public SunriseSunsetOverview getById(@PathVariable(value="id")int id) {
+        return sunriseSunsetService.getById(id);
+    }
+//    @RequestMapping("/")
+//    public SunriseSunsetOverview getByLatLong(double latitude, double longitude) {
+//        return sunriseSunsetService.getByLatLong(latitude,longitude);
+//    }
+    //Create/Post
+    @RequestMapping(method = RequestMethod.POST, value = "/")
+    public SunriseSunsetOverview addNew(@RequestBody SunriseSunsetOverview sunriseSunsetOverview) {
+        return sunriseSunsetService.addNew(sunriseSunsetOverview);
+    }
+//
+//    //Update
+    @RequestMapping(method = RequestMethod.PATCH, value = "/")
+    public SunriseSunsetOverview updateById(@RequestBody SunriseSunsetOverview sunriseSunsetOverview) {
+        return sunriseSunsetService.updateById(sunriseSunsetOverview);
+    }
 
+    //Delete
+    @RequestMapping(method= RequestMethod.DELETE, value="/")
+    public SunriseSunsetOverview deleteById(@RequestParam(value="id")int id){
+        return sunriseSunsetService.deleteById(id);
+    }
 }
