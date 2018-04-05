@@ -27,7 +27,7 @@ public class DataHourSummary {
         this.tsym = tsym;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 

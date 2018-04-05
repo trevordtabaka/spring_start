@@ -69,7 +69,9 @@ public class CryptoCompareService {
             histoHourRoot.setResponse(hourResponse.getResponse());
 
             for (Data element : hourResponse.getData()) {
+
                 DataHourSummary dataSummary = new DataHourSummary();
+                dataSummary.setTime(element.getTime());
                 dataSummary.setFsym(fsym);
                 dataSummary.setTsym(tsym);
                 dataSummary.setClose(element.getClose());

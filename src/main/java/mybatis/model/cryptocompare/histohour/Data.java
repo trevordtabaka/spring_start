@@ -2,7 +2,7 @@ package mybatis.model.cryptocompare.histohour;
 
 public class Data {
 
-    long time;
+    int time;
     double close;
     double high;
     double low;
@@ -10,11 +10,11 @@ public class Data {
     double volumefrom;
     double volumeto;
 
-    public long getTime() {
+    public int getTime() {
         return time;
     }
 
-    public void setTime(long time) {
+    public void setTime(int time) {
         this.time = time;
     }
 
