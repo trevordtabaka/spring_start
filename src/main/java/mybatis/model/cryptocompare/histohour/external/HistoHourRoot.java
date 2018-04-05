@@ -1,4 +1,4 @@
-package mybatis.model.cryptocompare.histohour;
+package mybatis.model.cryptocompare.histohour.external;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

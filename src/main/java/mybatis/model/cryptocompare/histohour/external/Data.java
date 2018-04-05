@@ -1,39 +1,18 @@
-package mybatis.model.cryptocompare.histohour;
+package mybatis.model.cryptocompare.histohour.external;
 
-public class DataHourSummary {
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-    int id;
-    String fsym;
-    String tsym;
+public class Data {
+
     int time;
     double close;
     double high;
     double low;
     double open;
-
-    public String getFsym() {
-        return fsym;
-    }
-
-    public void setFsym(String fsym) {
-        this.fsym = fsym;
-    }
-
-    public String getTsym() {
-        return tsym;
-    }
-
-    public void setTsym(String tsym) {
-        this.tsym = tsym;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    double volumefrom;
+    double volumeto;
 
     public int getTime() {
         return time;
@@ -73,5 +52,21 @@ public class DataHourSummary {
 
     public void setOpen(double open) {
         this.open = open;
+    }
+
+    public double getVolumefrom() {
+        return volumefrom;
+    }
+
+    public void setVolumefrom(double volumefrom) {
+        this.volumefrom = volumefrom;
+    }
+
+    public double getVolumeto() {
+        return volumeto;
+    }
+
+    public void setVolumeto(double volumeto) {
+        this.volumeto = volumeto;
     }
 }

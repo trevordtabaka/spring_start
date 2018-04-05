@@ -1,4 +1,4 @@
-package mybatis.model.cryptocompare.histohour;
+package mybatis.model.cryptocompare.histohour.external;
 
 public class ConversionType {
 

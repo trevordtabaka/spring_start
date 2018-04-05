@@ -4,13 +4,17 @@ import mybatis.mappers.cryptocompare.CryptoCompareMapper;
 import mybatis.model.cryptocompare.CryptoCompareRoot;
 import mybatis.model.cryptocompare.CryptoCompareSingle;
 import mybatis.model.cryptocompare.TestCryptoResponse;
-import mybatis.model.cryptocompare.histohour.Data;
-import mybatis.model.cryptocompare.histohour.DataHourSummary;
-import mybatis.model.cryptocompare.histohour.HistoHourRoot;
+import mybatis.model.cryptocompare.histohour.external.Data;
+import mybatis.model.cryptocompare.histohour.internal.DataHourSummary;
+import mybatis.model.cryptocompare.histohour.external.HistoHourRoot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 @Service
@@ -79,6 +83,8 @@ public class CryptoCompareService {
                 dataSummary.setHigh(element.getHigh());
                 dataSummary.setLow(element.getLow());
 
+                System.out.println(setFormatTime(element.getTime()));
+
                 insertHourSummary(dataSummary);
             }
 
@@ -89,6 +95,18 @@ public class CryptoCompareService {
     public void insertHourSummary(DataHourSummary result){
 
         cryptoCompareMapper.insertHourSummary(result);
+
+    }
+    public Date setFormatTime(int time) {
+
+
+        Date date=new Date(time);
+        return date;
+    }
+
+    public ArrayList<DataHourSummary> getDataByFsym(String fsym) {
+
+        return cryptoCompareMapper.getDataByFsym(fsym);
 
     }
 }

@@ -1,13 +1,15 @@
 package mybatis.controllers;
 
-import mybatis.model.cryptocompare.CryptoCompareRoot;
-import mybatis.model.cryptocompare.TestCryptoResponse;
-import mybatis.model.cryptocompare.histohour.HistoHourRoot;
+import mybatis.model.cryptocompare.histohour.external.HistoHourRoot;
+import mybatis.model.cryptocompare.histohour.internal.DataHourSummary;
 import mybatis.services.cryptocompare.CryptoCompareService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("cryptocompare")
@@ -50,6 +52,9 @@ public class CryptoController {
      * @param persist - Persist set to true will notify the service that you wish to store the data into your database
      * @return- Returns a call to the method getMultiData() in the service package with the specified variables
      */
+
+
+
     @RequestMapping("/")
     public HistoHourRoot getHistoHour(@RequestParam(value="fsym", defaultValue="BTC") String fsym,
                                       @RequestParam(value="tsym", defaultValue="USD") String tsym,
@@ -60,5 +65,8 @@ public class CryptoController {
                                       @RequestParam(value="persist", defaultValue="true") boolean persist) {
         return cryptoCompareService.getHistoHour(fsym, tsym, e, extraParams, sign, limit, persist);
     }
-
+    @RequestMapping("/{fsym}")
+    public ArrayList<DataHourSummary> getDataByFsym(@PathVariable(value= "fsym")String fsym) {
+        return cryptoCompareService.getDataByFsym(fsym);
+    }
 }
