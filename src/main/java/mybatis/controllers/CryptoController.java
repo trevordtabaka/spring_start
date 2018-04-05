@@ -23,12 +23,12 @@ public class CryptoController {
      * @param persist - Persist set to true will notify the service that you wish to store the data into your database
      * @return- Returns a call to the method getMultiData() in the service package with the specified variables
      */
-    @RequestMapping("/")
-    public CryptoCompareRoot getMultiData(@RequestParam(value="fsyms", defaultValue="BTC,ETH,LTC") String fsyms,
-                                        @RequestParam(value="tsyms", defaultValue="USD,EUR") String tsyms,
-                                        @RequestParam(value="p", defaultValue="true") boolean persist) {
-        return cryptoCompareService.getMultiData(fsyms, tsyms, persist);
-    }
+//    @RequestMapping("/")
+//    public CryptoCompareRoot getMultiData(@RequestParam(value="fsyms", defaultValue="BTC,ETH,LTC") String fsyms,
+//                                        @RequestParam(value="tsyms", defaultValue="USD,EUR") String tsyms,
+//                                        @RequestParam(value="p", defaultValue="true") boolean persist) {
+//        return cryptoCompareService.getMultiData(fsyms, tsyms, persist);
+//    }
 
     /**
      *
@@ -37,12 +37,12 @@ public class CryptoController {
      * @return- Returns a call to the method getSingleData() in the service package with the specified variables
      */
 
-    @RequestMapping("/test")
-    public TestCryptoResponse getSingleData(@RequestParam(value="fsym", defaultValue="BTC") String fsym,
-                                            @RequestParam(value="tsym", defaultValue="ETH") String tsym,
-                                            @RequestParam(value="p", defaultValue="true") boolean persist) {
-        return cryptoCompareService.getSingleData(fsym,tsym,persist);
-    }
+//    @RequestMapping("/test")
+//    public TestCryptoResponse getSingleData(@RequestParam(value="fsym", defaultValue="BTC") String fsym,
+//                                            @RequestParam(value="tsym", defaultValue="ETH") String tsym,
+//                                            @RequestParam(value="p", defaultValue="true") boolean persist) {
+//        return cryptoCompareService.getSingleData(fsym,tsym,persist);
+//    }
     /**
      *
      * @param fsym - You can specify the cryptocurrencies you want to query separated by commas. i.e. BTC,ETH,...
@@ -52,7 +52,7 @@ public class CryptoController {
      */
     @RequestMapping("/")
     public HistoHourRoot getHistoHour(@RequestParam(value="fsym", defaultValue="BTC") String fsym,
-                                      @RequestParam(value="tsym", defaultValue="USD,EUR,DKK") String tsym,
+                                      @RequestParam(value="tsym", defaultValue="USD") String tsym,
                                       @RequestParam(value="e", defaultValue="CCCAGG") String e,
                                       @RequestParam(value="extraParams", defaultValue="NotAvailable") String extraParams,
                                       @RequestParam(value="sign", defaultValue="false") boolean sign,

@@ -4,13 +4,13 @@ import mybatis.mappers.cryptocompare.CryptoCompareMapper;
 import mybatis.model.cryptocompare.CryptoCompareRoot;
 import mybatis.model.cryptocompare.CryptoCompareSingle;
 import mybatis.model.cryptocompare.TestCryptoResponse;
+import mybatis.model.cryptocompare.histohour.Data;
+import mybatis.model.cryptocompare.histohour.DataHourSummary;
 import mybatis.model.cryptocompare.histohour.HistoHourRoot;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -61,8 +61,32 @@ public class CryptoCompareService {
 
         // Query
         String fQuery = "https://min-api.cryptocompare.com/data/histohour?fsym="+fsym+"&tsym="+tsym+"&e="+e+"&extraParams="+extraParams+"&sign="+sign+"&limit="+limit+"&persist="+persist;
-        HistoHourRoot response = restTemplate.getForObject(
+        HistoHourRoot hourResponse = restTemplate.getForObject(
                 fQuery, HistoHourRoot.class);
-        return response;
+        HistoHourRoot histoHourRoot = new HistoHourRoot();
+
+        if(persist){
+            histoHourRoot.setResponse(hourResponse.getResponse());
+
+            for (Data element : hourResponse.getData()) {
+                DataHourSummary dataSummary = new DataHourSummary();
+                dataSummary.setFsym(fsym);
+                dataSummary.setTsym(tsym);
+                dataSummary.setClose(element.getClose());
+                dataSummary.setOpen(element.getOpen());
+                dataSummary.setHigh(element.getHigh());
+                dataSummary.setLow(element.getLow());
+
+                insertHourSummary(dataSummary);
+            }
+
+        }
+
+        return hourResponse;
+    }
+    public void insertHourSummary(DataHourSummary result){
+
+        cryptoCompareMapper.insertHourSummary(result);
+
     }
 }
