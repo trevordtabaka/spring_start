@@ -1,10 +1,11 @@
-package mybatis.services;
+package mybatis.services.User;
 
 import mybatis.mappers.UserMapper;
 import mybatis.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -17,6 +18,8 @@ public class UserService {
     @Autowired
     UserMapper userMapper;
 
+    @Autowired
+    SecurityService securityService;
 
     private Connection connection = null;
     private Statement statement = null;
@@ -91,7 +94,10 @@ public class UserService {
     }
 
     //add new user
-    public User addNew(User user) {
+    public User addNew(User user) throws NoSuchAlgorithmException {
+        String key = securityService.generateApiKey(15);
+        user.setApiKey(key);
+
         userMapper.insertUser(user);
         return userMapper.getByName(user.getFirst_name());
     }

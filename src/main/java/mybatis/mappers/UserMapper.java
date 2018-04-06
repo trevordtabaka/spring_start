@@ -16,6 +16,7 @@ public interface UserMapper {
     String DELETE_USER = "UPDATE `mybatis-test`.Users set isActive = 0 WHERE id = #{id}";
     String GET_BY_NAME = "SELECT * FROM `mybatis-test`.Users where first_name = #{first_name}";
     String CUSTOM_QUERY = "SELECT * FROM `mybatis-test`.users where age = #{age}";
+    String AUTHENTICATE = "SELECT isActive FROM `mybatis-test`.users WHERE apiKey = #{key}";
 
     @Select(CUSTOM_QUERY)
     public ArrayList<User> getUserByAge(int age);
@@ -36,5 +37,8 @@ public interface UserMapper {
 
     @Delete(DELETE_USER)
     public int deleteUser(int id);
+
+    @Select(AUTHENTICATE)
+    public int authenticate(String key);
 
 }

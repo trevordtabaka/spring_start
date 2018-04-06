@@ -1,11 +1,12 @@
 package mybatis.controllers;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicLong;
 
-import mybatis.model.Greeting;
+import mybatis.exception.AuthenticationException;
 import mybatis.model.User;
-import mybatis.services.UserService;
+import mybatis.services.User.SecurityService;
+import mybatis.services.User.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,8 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    SecurityService securityService;
 
     //RequestMapping maps URLs to methods
     @RequestMapping("/age")
@@ -24,13 +27,23 @@ public class UserController {
     }
     //Get
     @RequestMapping("/")
-    public ArrayList<User> getUsers() {
-        return userService.getAllUsers();
+    public ArrayList<User> getUsers(@RequestParam("apiKey") String apiKey ) throws AuthenticationException {
+        if(securityService.authenticate(apiKey)){
+            return userService.getAllUsers();
+        }
+        throw new AuthenticationException("API key invalid");
+
+
     }
 
     @RequestMapping("/{id}")
-    public User getById(@PathVariable(value="id")int id) {
-        return userService.getById(id);
+    public User getById(@RequestParam("apiKey") String apiKey,
+            @PathVariable(value="id")int id) throws AuthenticationException{
+        if(securityService.authenticate(apiKey)){
+            return userService.getById(id);
+        }
+
+        throw new AuthenticationException("API key is Invalid");
     }
 
     @RequestMapping("/manual")
@@ -42,7 +55,7 @@ public class UserController {
 
     //Create
     @RequestMapping(method = RequestMethod.POST, value = "/")
-    public User addNew(@RequestBody User user) {
+    public User addNew(@RequestBody User user) throws NoSuchAlgorithmException {
         return userService.addNew(user);
     }
 
@@ -57,4 +70,6 @@ public class UserController {
     public User deleteById(@RequestParam(value="id")int id){
         return userService.deleteById(id);
     }
+
+
 }

@@ -9,12 +9,14 @@ public class User {
     String first_name;
     String last_name;
     int isActive;
+    String apiKey;
 
-    public User(int id, String first_name, String last_name, int isActive) {
+    public User(int id, String first_name, String last_name, int isActive, String apiKey) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.isActive = isActive;
+        this.apiKey = apiKey;
     }
 
     public User() {
@@ -48,7 +50,15 @@ public class User {
         return isActive;
     }
 
-    public void setIsActive(int active) {
-        isActive = active;
+    public void setIsActive(int isActive) {
+        this.isActive = isActive;
+    }
+
+    public String getApiKey() {
+        return apiKey;
+    }
+
+    public void setApiKey(String apiKey) {
+        this.apiKey = apiKey;
     }
 }
