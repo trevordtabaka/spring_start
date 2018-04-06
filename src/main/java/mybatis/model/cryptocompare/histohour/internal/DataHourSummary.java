@@ -1,15 +1,27 @@
 package mybatis.model.cryptocompare.histohour.internal;
 
+import java.util.Date;
+
 public class DataHourSummary {
 
     int id;
     String fsym;
     String tsym;
-    int time;
+    long time;
+    Date dateTime;
     double close;
     double high;
     double low;
     double open;
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getFsym() {
         return fsym;
@@ -27,20 +39,23 @@ public class DataHourSummary {
         this.tsym = tsym;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getTime() {
+    public long getTime() {
         return time;
     }
 
-    public void setTime(int time) {
-        this.time = time;
+    public void setTime(long time) {
+        long millis = time *1000;
+        setDateTime(millis);
+        this.time = millis;
+    }
+
+    public Date getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(long millis) {
+        Date date = new Date(millis);
+        this.dateTime = date;
     }
 
     public double getClose() {
@@ -75,3 +90,5 @@ public class DataHourSummary {
         this.open = open;
     }
 }
+
+

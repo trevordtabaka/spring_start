@@ -15,8 +15,8 @@ public interface CryptoCompareMapper {
             "VALUES (#{fsym}, #{USD}, #{EUR},#{GBP},#{DKK};");
 
     String GET_FSYM = ("SELECT * FROM `mybatis-test`.crypto_compare where fsym = #{fsym}");
-    String INSERT_HOURSUMMARY = ("INSERT INTO `mybatis-test`.crypto_compare (fsym,tsym,time, close, open, high, low) " +
-            "VALUES (#{fsym}, #{tsym},#{time}, #{close}, #{open}, #{high},#{low})");
+    String INSERT_HOURSUMMARY = ("INSERT INTO `mybatis-test`.crypto_compare (fsym,tsym,time,dateTime, close, open, high, low) " +
+            "VALUES (#{fsym}, #{tsym},#{time},#{dateTime},#{close}, #{open}, #{high},#{low})");
 
 
     @Insert(INSERT_HOURSUMMARY)

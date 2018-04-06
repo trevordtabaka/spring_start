@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Data {
 
-    int time;
+    long time;
     double close;
     double high;
     double low;
@@ -14,11 +14,11 @@ public class Data {
     double volumefrom;
     double volumeto;
 
-    public int getTime() {
+    public long getTime() {
         return time;
     }
 
-    public void setTime(int time) {
+    public void setTime(long time) {
         this.time = time;
     }
 

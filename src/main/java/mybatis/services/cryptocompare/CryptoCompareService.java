@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -76,6 +77,7 @@ public class CryptoCompareService {
 
                 DataHourSummary dataSummary = new DataHourSummary();
                 dataSummary.setTime(element.getTime());
+                dataSummary.setDateTime(dataSummary.getTime());
                 dataSummary.setFsym(fsym);
                 dataSummary.setTsym(tsym);
                 dataSummary.setClose(element.getClose());
@@ -83,7 +85,7 @@ public class CryptoCompareService {
                 dataSummary.setHigh(element.getHigh());
                 dataSummary.setLow(element.getLow());
 
-                System.out.println(setFormatTime(element.getTime()));
+                System.out.println(dataSummary.getDateTime());
 
                 insertHourSummary(dataSummary);
             }
@@ -92,17 +94,12 @@ public class CryptoCompareService {
 
         return hourResponse;
     }
-    public void insertHourSummary(DataHourSummary result){
+    public void insertHourSummary(DataHourSummary result) {
 
         cryptoCompareMapper.insertHourSummary(result);
 
     }
-    public Date setFormatTime(int time) {
 
-
-        Date date=new Date(time);
-        return date;
-    }
 
     public ArrayList<DataHourSummary> getDataByFsym(String fsym) {
 
