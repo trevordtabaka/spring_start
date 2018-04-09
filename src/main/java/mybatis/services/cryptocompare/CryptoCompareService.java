@@ -116,4 +116,6 @@ public class CryptoCompareService {
 
     }
 
+//    public HistoDailyRoot getHistoDaily(String fsym, String tsym, String e, String extraParams, boolean sign, int limit, boolean persist) {
+//    }
 }

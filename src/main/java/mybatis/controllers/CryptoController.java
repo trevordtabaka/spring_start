@@ -57,16 +57,26 @@ public class CryptoController {
 
 
 
-    @RequestMapping("/")
+    @RequestMapping("/hourly")
     public HistoHourRoot getHistoHour(@RequestParam(value="fsym", defaultValue="BTC") String fsym,
                                       @RequestParam(value="tsym", defaultValue="USD") String tsym,
                                       @RequestParam(value="e", defaultValue="CCCAGG") String e,
                                       @RequestParam(value="extraParams", defaultValue="NotAvailable") String extraParams,
                                       @RequestParam(value="sign", defaultValue="false") boolean sign,
-                                      @RequestParam(value="limit", defaultValue="168") int limit,
+                                      @RequestParam(value="limit", defaultValue="1000") int limit,
                                       @RequestParam(value="persist", defaultValue="true") boolean persist) throws SQLIntegrityConstraintViolationException {
         return cryptoCompareService.getHistoHour(fsym, tsym, e, extraParams, sign, limit, persist);
     }
+//    @RequestMapping("/")
+//    public HistoDailyRoot getHistoHour(@RequestParam(value="fsym", defaultValue="BTC") String fsym,
+//                                      @RequestParam(value="tsym", defaultValue="USD") String tsym,
+//                                      @RequestParam(value="e", defaultValue="CCCAGG") String e,
+//                                      @RequestParam(value="extraParams", defaultValue="NotAvailable") String extraParams,
+//                                      @RequestParam(value="sign", defaultValue="false") boolean sign,
+//                                      @RequestParam(value="limit", defaultValue="168") int limit,
+//                                      @RequestParam(value="persist", defaultValue="true") boolean persist) throws SQLIntegrityConstraintViolationException {
+//        return cryptoCompareService.getHistoDaily(fsym, tsym, e, extraParams, sign, limit, persist);
+//    }
     @RequestMapping("/{fsym}")
     public ArrayList<SqlDataSummary> getDataByFsym(@PathVariable(value= "fsym")String fsym) {
         return cryptoCompareService.getDataByFsym(fsym);
