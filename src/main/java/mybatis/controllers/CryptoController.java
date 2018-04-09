@@ -2,6 +2,7 @@ package mybatis.controllers;
 
 import mybatis.model.cryptocompare.histohour.external.HistoHourRoot;
 import mybatis.model.cryptocompare.histohour.internal.DataHourSummary;
+import mybatis.model.cryptocompare.histohour.internal.SqlDataSummary;
 import mybatis.services.cryptocompare.CryptoCompareService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -67,7 +68,8 @@ public class CryptoController {
         return cryptoCompareService.getHistoHour(fsym, tsym, e, extraParams, sign, limit, persist);
     }
     @RequestMapping("/{fsym}")
-    public ArrayList<DataHourSummary> getDataByFsym(@PathVariable(value= "fsym")String fsym) {
+    public ArrayList<SqlDataSummary> getDataByFsym(@PathVariable(value= "fsym")String fsym) {
         return cryptoCompareService.getDataByFsym(fsym);
     }
+
 }

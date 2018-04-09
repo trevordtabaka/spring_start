@@ -53,6 +53,7 @@ public class DataHourSummary {
         return dateTime;
     }
 
+
     public void setDateTime(long millis) {
         Date date = new Date(millis);
         this.dateTime = date;

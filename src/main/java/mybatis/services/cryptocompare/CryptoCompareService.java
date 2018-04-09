@@ -7,6 +7,7 @@ import mybatis.model.cryptocompare.TestCryptoResponse;
 import mybatis.model.cryptocompare.histohour.external.Data;
 import mybatis.model.cryptocompare.histohour.internal.DataHourSummary;
 import mybatis.model.cryptocompare.histohour.external.HistoHourRoot;
+import mybatis.model.cryptocompare.histohour.internal.SqlDataSummary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -64,43 +65,52 @@ public class CryptoCompareService {
 
         // Query
         String fQuery = "https://min-api.cryptocompare.com/data/histohour?fsym="+fsym+"&tsym="+tsym+"&e="+e+"&extraParams="+extraParams+"&sign="+sign+"&limit="+limit+"&persist="+persist;
+        System.out.println(fQuery);
         HistoHourRoot hourResponse = restTemplate.getForObject(
                 fQuery, HistoHourRoot.class);
         HistoHourRoot histoHourRoot = new HistoHourRoot();
 
         if(persist){
             histoHourRoot.setResponse(hourResponse.getResponse());
-            int count = 0;
+
             for (Data element : hourResponse.getData()) {
-
                 DataHourSummary dataSummary = new DataHourSummary();
-                dataSummary.setTime(element.getTime());
-                dataSummary.setDateTime(dataSummary.getTime());
-                dataSummary.setFsym(fsym);
-                dataSummary.setTsym(tsym);
-                dataSummary.setClose(element.getClose());
-                dataSummary.setOpen(element.getOpen());
-                dataSummary.setHigh(element.getHigh());
-                dataSummary.setLow(element.getLow());
+                try{
 
-                System.out.println(dataSummary.getDateTime());
-                System.out.println(count++);
+                    dataSummary.setTime(element.getTime());
+                    dataSummary.setDateTime(dataSummary.getTime());
+                    dataSummary.setFsym(fsym);
+                    dataSummary.setTsym(tsym);
+                    dataSummary.setClose(element.getClose());
+                    dataSummary.setOpen(element.getOpen());
+                    dataSummary.setHigh(element.getHigh());
+                    dataSummary.setLow(element.getLow());
 
-                insertHourSummary(dataSummary);
+
+                    insertHourSummary(dataSummary);
+                    System.out.println("Added not unique data " + dataSummary.getTime());
+                }catch(Exception dupE){
+                    System.out.println("Caught a duplicate entry");
+                }
+
+
+
             }
+
 
         }
 
         return hourResponse;
     }
-    public void insertHourSummary(DataHourSummary result) throws SQLIntegrityConstraintViolationException{
+    public void insertHourSummary(DataHourSummary result) throws Exception
+    {
 
         cryptoCompareMapper.insertHourSummary(result);
 
     }
 
 
-    public ArrayList<DataHourSummary> getDataByFsym(String fsym) {
+    public ArrayList<SqlDataSummary> getDataByFsym(String fsym) {
 
         return cryptoCompareMapper.getDataByFsym(fsym);
 

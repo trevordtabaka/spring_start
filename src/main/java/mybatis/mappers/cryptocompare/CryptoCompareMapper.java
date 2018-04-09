@@ -2,6 +2,7 @@ package mybatis.mappers.cryptocompare;
 
 import mybatis.model.cryptocompare.CryptoCompareSingle;
 import mybatis.model.cryptocompare.histohour.internal.DataHourSummary;
+import mybatis.model.cryptocompare.histohour.internal.SqlDataSummary;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -18,13 +19,15 @@ public interface CryptoCompareMapper {
     String INSERT_HOURSUMMARY = ("INSERT INTO `mybatis-test`.crypto_compare (fsym,tsym,time,dateTime, close, open, high, low) " +
             "VALUES (#{fsym}, #{tsym},#{time},#{dateTime},#{close}, #{open}, #{high},#{low})");
 
-
     @Insert(INSERT_HOURSUMMARY)
-    public int insertHourSummary(DataHourSummary result);
+    public long insertHourSummary(DataHourSummary result);
+
     CryptoCompareSingle getSingle(String s);
 
     @Insert(INSERT_SINGLE)
     void insertSingle(CryptoCompareSingle compareSingle);
     @Select(GET_FSYM)
-    ArrayList<DataHourSummary> getDataByFsym(String fsym);
+    ArrayList<SqlDataSummary> getDataByFsym(String fsym);
+
+
 }
