@@ -10,12 +10,10 @@ import mybatis.model.cryptocompare.histohour.external.HistoHourRoot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
 import java.sql.SQLIntegrityConstraintViolationException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Map;
 
 @Service
@@ -62,7 +60,7 @@ public class CryptoCompareService {
         return cryptoCompareMapper.getSingle(compareSingle.getfSym());
     }
 
-    public HistoHourRoot getHistoHour(String fsym,String tsym,String e,String extraParams,boolean sign,int limit,boolean persist){
+    public HistoHourRoot getHistoHour(String fsym,String tsym,String e,String extraParams,boolean sign,int limit,boolean persist) throws SQLIntegrityConstraintViolationException {
 
         // Query
         String fQuery = "https://min-api.cryptocompare.com/data/histohour?fsym="+fsym+"&tsym="+tsym+"&e="+e+"&extraParams="+extraParams+"&sign="+sign+"&limit="+limit+"&persist="+persist;
@@ -72,7 +70,7 @@ public class CryptoCompareService {
 
         if(persist){
             histoHourRoot.setResponse(hourResponse.getResponse());
-
+            int count = 0;
             for (Data element : hourResponse.getData()) {
 
                 DataHourSummary dataSummary = new DataHourSummary();
@@ -86,6 +84,7 @@ public class CryptoCompareService {
                 dataSummary.setLow(element.getLow());
 
                 System.out.println(dataSummary.getDateTime());
+                System.out.println(count++);
 
                 insertHourSummary(dataSummary);
             }
@@ -94,7 +93,7 @@ public class CryptoCompareService {
 
         return hourResponse;
     }
-    public void insertHourSummary(DataHourSummary result) {
+    public void insertHourSummary(DataHourSummary result) throws SQLIntegrityConstraintViolationException{
 
         cryptoCompareMapper.insertHourSummary(result);
 
@@ -106,4 +105,5 @@ public class CryptoCompareService {
         return cryptoCompareMapper.getDataByFsym(fsym);
 
     }
+
 }
