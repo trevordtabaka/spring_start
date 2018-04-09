@@ -78,8 +78,8 @@ public class CryptoController {
 //        return cryptoCompareService.getHistoDaily(fsym, tsym, e, extraParams, sign, limit, persist);
 //    }
     @RequestMapping("/{fsym}")
-    public ArrayList<SqlDataSummary> getDataByFsym(@PathVariable(value= "fsym")String fsym) {
-        return cryptoCompareService.getDataByFsym(fsym);
+    public ArrayList<SqlDataSummary> getHourDataByFsym(@PathVariable(value= "fsym")String fsym) {
+        return cryptoCompareService.getHourDataByFsym(fsym);
     }
 
 }

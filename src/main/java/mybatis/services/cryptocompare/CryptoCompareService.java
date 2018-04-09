@@ -110,9 +110,9 @@ public class CryptoCompareService {
     }
 
 
-    public ArrayList<SqlDataSummary> getDataByFsym(String fsym) {
+    public ArrayList<SqlDataSummary> getHourDataByFsym(String fsym) {
 
-        return cryptoCompareMapper.getDataByFsym(fsym);
+        return cryptoCompareMapper.getHourDataByFsym(fsym);
 
     }
 

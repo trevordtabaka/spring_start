@@ -15,8 +15,8 @@ public interface CryptoCompareMapper {
     String INSERT_SINGLE = ("INSERT INTO `mybatis-test`.`crypto_compare` (`fsym`, `USD`, `EUR`,`GBP`,DKK`) " +
             "VALUES (#{fsym}, #{USD}, #{EUR},#{GBP},#{DKK};");
 
-    String GET_FSYM = ("SELECT * FROM `mybatis-test`.crypto_compare where fsym = #{fsym}");
-    String INSERT_HOURSUMMARY = ("INSERT INTO `mybatis-test`.crypto_compare (fsym,tsym,time,dateTime, close, open, high, low) " +
+    String GET_FSYM_HOUR = ("SELECT * FROM `mybatis-test`.historical_hour where fsym = #{fsym}");
+    String INSERT_HOURSUMMARY = ("INSERT INTO `mybatis-test`.historical_hour (fsym,tsym,time,dateTime, close, open, high, low) " +
             "VALUES (#{fsym}, #{tsym},#{time},#{dateTime},#{close}, #{open}, #{high},#{low})");
 
     @Insert(INSERT_HOURSUMMARY)
@@ -26,8 +26,8 @@ public interface CryptoCompareMapper {
 
     @Insert(INSERT_SINGLE)
     void insertSingle(CryptoCompareSingle compareSingle);
-    @Select(GET_FSYM)
-    ArrayList<SqlDataSummary> getDataByFsym(String fsym);
+    @Select(GET_FSYM_HOUR)
+    ArrayList<SqlDataSummary> getHourDataByFsym(String fsym);
 
 
 }
